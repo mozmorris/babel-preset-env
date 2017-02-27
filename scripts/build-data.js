@@ -6,8 +6,8 @@ const path = require("path");
 const flatten = require("lodash/flatten");
 const flattenDeep = require("lodash/flattenDeep");
 const mapValues = require("lodash/mapValues");
-const pluginFeatures = require("../features/plugin-features").default;
-const builtInFeatures = require("../features/built-in-features").default;
+const pluginFeatures = require("../features/plugins").default;
+const builtInFeatures = require("../features/built-ins").default;
 
 const renameTests = (tests, getName) =>
   tests.map((test) => Object.assign({}, test, { name: getName(test.name) }));
