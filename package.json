@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "rimraf lib && babel src -d lib",
-    "build-data": "node ./scripts/build-data.js",
+    "build-data": "babel-node ./scripts/build-data.js",
     "dev": "babel -w src -d lib",
     "lint": "eslint .",
     "fix": "eslint . --fix",
@@ -61,7 +61,7 @@
     "compat-table": "kangax/compat-table#688097f1ce623cb113640cc9108fe04fc418b823",
     "eslint": "^3.13.1",
     "eslint-config-babel": "^5.0.0",
-    "eslint-plugin-flowtype": "^2.29.1",
+    "eslint-plugin-flowtype": "^2.30.0",
     "fs-extra": "^2.0.0",
     "lodash": "^4.15.0",
     "mocha": "^3.0.2",
