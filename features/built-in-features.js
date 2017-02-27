@@ -1,6 +1,10 @@
+// @flow
 // https://github.com/zloirock/core-js
+import type { BuiltIn, FeaturesMap } from "./types";
 
-const es2015 = {
+type BuiltInsMap = FeaturesMap<BuiltIn>;
+
+export const es2015: BuiltInsMap = {
   // "es6.typed/array-buffer": "typed arrays / ",
   "es6.typed.data-view": "typed arrays / DataView",
   "es6.typed.int8-array": "typed arrays / Int8Array",
@@ -119,11 +123,11 @@ const es2015 = {
   "es6.math.trunc": "Math methods / Math.trunc",
 };
 
-const es2016 = {
+export const es2016: BuiltInsMap = {
   "es7.array.includes": "Array.prototype.includes",
 };
 
-const es2017 = {
+export const es2017: BuiltInsMap = {
   "es7.object.values": "Object static methods / Object.values",
   "es7.object.entries": "Object static methods / Object.entries",
   "es7.object.get-own-property-descriptors": "Object static methods / Object.getOwnPropertyDescriptors",
@@ -131,4 +135,4 @@ const es2017 = {
   "es7.string.pad-end": "String padding / String.prototype.padEnd",
 };
 
-module.exports = Object.assign({}, es2015, es2016, es2017);
+export default ({...es2015, ...es2016, ...es2017}: BuiltInsMap);

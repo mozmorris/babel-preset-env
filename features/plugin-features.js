@@ -1,5 +1,9 @@
-module.exports = {
-  // es2015
+// @flow
+import type { Plugin, FeaturesMap } from "./types";
+
+type PluginsMap = FeaturesMap<Plugin>;
+
+export const es2015: PluginsMap = {
   "transform-es2015-arrow-functions": {
     features: [
       "arrow functions",
@@ -102,16 +106,18 @@ module.exports = {
     features: [
       "generators",
     ],
-  },
+  }
+};
 
-  // es2016
+export const es2016: PluginsMap = {
   "transform-exponentiation-operator": {
     features: [
       "exponentiation (**) operator",
     ],
-  },
+  }
+};
 
-  // es2017
+export const es2017: PluginsMap = {
   "transform-async-to-generator": {
     features: [
       "async functions",
@@ -123,3 +129,5 @@ module.exports = {
     ],
   }
 };
+
+export default ({...es2015, ...es2016, ...es2017}: PluginsMap);
