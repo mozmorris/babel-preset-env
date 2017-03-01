@@ -7,7 +7,17 @@ import moduleTransformations from "./module-transformations";
 import normalizeOptions from "./normalize-options.js";
 import pluginList from "../data/plugins.json";
 import transformPolyfillRequirePlugin from "./transform-polyfill-require-plugin";
-import type { TargetsOption, DataType } from "./types";
+import type {
+  Options,
+  StrictOptions,
+  TargetsOption,
+  DataType,
+  PluginType,
+  DebugOption,
+  LooseOption,
+  ModuleOption,
+  UseBuiltInsOption
+} from "./types";
 
 /**
  * Determine if a transformation is required
@@ -160,20 +170,30 @@ export const transformIncludesAndExcludes = (opts) => ({
   builtIns: opts.filter((opt) => opt.match(/^(es\d+|web)\./))
 });
 
-export default function buildPreset(context, opts = {}) {
-  const validatedOptions = normalizeOptions(opts);
-  const {debug, loose, moduleType, useBuiltIns} = validatedOptions;
+export default function buildPreset(context: Object, opts: Options = {}): Array<PluginType> {
+  const validatedOptions: StrictOptions = normalizeOptions(opts);
+  const {
+    debug,
+    loose,
+    moduleType,
+    useBuiltIns
+  }: {
+    debug: DebugOption,
+    loose: LooseOption,
+    moduleType: ModuleOption,
+    useBuiltIns: UseBuiltInsOption
+  } = validatedOptions;
 
-  const targets = getTargets(validatedOptions.targets);
+  const targets: TargetsOption = getTargets(validatedOptions.targets);
   const include = transformIncludesAndExcludes(validatedOptions.include);
   const exclude = transformIncludesAndExcludes(validatedOptions.exclude);
 
   const filterPlugins = filterItem.bind(null, targets, exclude.plugins, pluginList);
-  const transformations = Object.keys(pluginList)
+  const transformations: Array<string> = Object.keys(pluginList)
     .filter(filterPlugins)
     .concat(include.plugins);
 
-  let polyfills;
+  let polyfills: Array<string> = [];
   if (useBuiltIns) {
     const filterBuiltIns = filterItem.bind(null, targets, exclude.builtIns, builtInsList);
 
@@ -190,30 +210,33 @@ export default function buildPreset(context, opts = {}) {
     console.log(JSON.stringify(targets, null, 2));
     console.log(`\nModules transform: ${moduleType}`);
     console.log("\nUsing plugins:");
-    transformations.forEach((transform) => {
+    transformations.forEach((transform: string) => {
       logPlugin(transform, targets, pluginList);
     });
     if (useBuiltIns && polyfills.length) {
       console.log("\nUsing polyfills:");
-      polyfills.forEach((polyfill) => {
+      polyfills.forEach((polyfill: string) => {
         logPlugin(polyfill, targets, builtInsList);
       });
     }
   }
 
-  const regenerator = transformations.indexOf("transform-regenerator") >= 0;
-  const modulePlugin = moduleType !== false && moduleTransformations[moduleType];
-  const plugins = [];
+  const regenerator: boolean = transformations.indexOf("transform-regenerator") >= 0;
+  const modulePlugin: ?string = moduleType !== false ? moduleTransformations[moduleType] : null;
+  const plugins: Array<PluginType> = [];
 
-  modulePlugin &&
-    plugins.push([require(`babel-plugin-${modulePlugin}`), { loose }]);
+  if (modulePlugin) {
+    const fullPluginName = `babel-plugin-${modulePlugin}`;
+    plugins.push([require(fullPluginName), { loose }]);
+  }
 
   plugins.push(...transformations.map((pluginName) =>
     [require(`babel-plugin-${pluginName}`), { loose }]
   ));
 
-  useBuiltIns &&
+  if (useBuiltIns) {
     plugins.push([transformPolyfillRequirePlugin, { polyfills, regenerator }]);
+  }
 
   return {
     plugins

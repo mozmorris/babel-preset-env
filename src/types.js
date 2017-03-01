@@ -13,6 +13,12 @@ type NodeType = TargetType | "current" | true;
 
 // Options
 export type ModuleOption = Module | boolean;
+export type DebugOption = boolean;
+export type LooseOption = boolean;
+export type IncludeOption = Array<string>;
+export type ExcludeOption = Array<string>;
+export type WhitelistOption = Array<string>;
+export type UseBuiltInsOption = boolean;
 export type BrowserslistQuery = Array<string> | string;
 export type TargetsOption = {
   browsers?: BrowserslistQuery,
@@ -22,16 +28,32 @@ export type TargetsOption = {
 
 export type Options = {
   whitelist?: Array<string>,
-  include?: Array<string>,
-  exclude?: Array<string>,
+  include?: IncludeOption,
+  exclude?: ExcludeOption,
   modules?: ModuleOption,
-  debug?: boolean,
-  loose?: boolean,
+  debug?: DebugOption,
+  loose?: LooseOption,
   moduleType?: ModuleOption,
   targets?: TargetsOption,
-  useBuiltIns?: boolean
+  useBuiltIns?: UseBuiltInsOption
 };
+
+export type StrictOptions = {|
+  debug: DebugOption,
+  include?: IncludeOption,
+  exclude?: ExcludeOption,
+  loose: LooseOption,
+  moduleType: ModuleOption,
+  targets: TargetsOption,
+  useBuiltIns: UseBuiltInsOption
+|};
 
 export type DataType {
   [target: string]: number
 };
+
+// Babel
+export type PluginType = [
+  Object,
+  Options
+]

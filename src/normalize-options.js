@@ -4,7 +4,7 @@ import builtInsList from "../data/built-ins.json";
 import pluginFeatures from "../features/plugins";
 import defaultInclude from "./default-includes";
 import moduleTransformations from "./module-transformations";
-import type { ModuleOption, Options } from "./types";
+import type { ModuleOption, Options, StrictOptions } from "./types";
 
 const validIncludesAndExcludes: Array<string> = [
   ...Object.keys(pluginFeatures),
@@ -79,7 +79,7 @@ export const validateModulesOption = (
 };
 
 
-export default function normalizeOptions(opts: Options): Options {
+export default function normalizeOptions(opts: Options): StrictOptions {
   // TODO: remove whitelist in favor of include in next major
   if (opts.whitelist) {
     console.warn(
