@@ -17,7 +17,7 @@ export type BrowserslistQuery = Array<string> | string;
 export type TargetsOption = {
   browsers?: BrowserslistQuery,
   node?: NodeType,
-  [string]: TargetType
+  [target: string]: TargetType
 };
 
 export type Options = {
@@ -30,4 +30,8 @@ export type Options = {
   moduleType?: ModuleOption,
   targets?: TargetsOption,
   useBuiltIns?: boolean
-}
+};
+
+export type DataType {
+  [target: string]: number
+};

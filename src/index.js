@@ -1,3 +1,4 @@
+// @flow
 import browserslist from "browserslist";
 import builtInsList from "../data/built-ins.json";
 import defaultInclude from "./default-includes";
@@ -6,6 +7,7 @@ import moduleTransformations from "./module-transformations";
 import normalizeOptions from "./normalize-options.js";
 import pluginList from "../data/plugins.json";
 import transformPolyfillRequirePlugin from "./transform-polyfill-require-plugin";
+import type { TargetsOption, DataType } from "./types";
 
 /**
  * Determine if a transformation is required
@@ -15,14 +17,16 @@ import transformPolyfillRequirePlugin from "./transform-polyfill-require-plugin"
  *                                          version the feature was implemented in as a value
  * @return {Boolean}  Whether or not the transformation is required
  */
-export const isPluginRequired = (supportedEnvironments, plugin) => {
+export const isPluginRequired = (supportedEnvironments: TargetsOption, plugin: DataType): boolean => {
   if (supportedEnvironments.browsers) {
     supportedEnvironments = getTargets(supportedEnvironments);
   }
 
-  const targetEnvironments = Object.keys(supportedEnvironments);
+  const targetEnvironments: Array<string> = Object.keys(supportedEnvironments);
 
-  if (targetEnvironments.length === 0) { return true; }
+  if (targetEnvironments.length === 0) { 
+    return true;
+  }
 
   const isRequiredForEnvironments = targetEnvironments
     .filter((environment) => {
