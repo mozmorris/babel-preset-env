@@ -25,7 +25,6 @@ export type TargetsOption = {
   node?: NodeType,
   [target: string]: TargetType
 };
-
 export type Options = {
   whitelist?: Array<string>,
   include?: IncludeOption,
@@ -37,7 +36,6 @@ export type Options = {
   targets?: TargetsOption,
   useBuiltIns?: UseBuiltInsOption
 };
-
 export type StrictOptions = {|
   debug: DebugOption,
   include?: IncludeOption,
@@ -48,6 +46,7 @@ export type StrictOptions = {|
   useBuiltIns: UseBuiltInsOption
 |};
 
+// Data
 export type DataType {
   [target: string]: number
 };
