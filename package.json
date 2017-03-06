@@ -59,6 +59,7 @@
     "babel-register": "^6.14.0",
     "chai": "^3.0.0",
     "compat-table": "kangax/compat-table#c38f039b8ea7fadf347d3e300fec3611645e31e9",
+    "electron": "1.6.1",
     "eslint": "^3.13.1",
     "eslint-config-babel": "^5.0.0",
     "eslint-plugin-flowtype": "^2.29.1",
