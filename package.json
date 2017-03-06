@@ -46,7 +46,7 @@
     "babel-plugin-transform-exponentiation-operator": "^6.8.0",
     "babel-plugin-transform-regenerator": "^6.6.0",
     "browserslist": "^1.4.0",
-    "electron-to-chromium": "^1.1.0",
+    "electron-to-chromium": "^1.2.5",
     "invariant": "^2.2.2"
   },
   "devDependencies": {
